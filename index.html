@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101510">
+<meta name="description" content="1BETWIN — prototype de démonstration avec matchs et cotes fictifs. Aucun pari en argent réel.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>1BETWIN — Démo</title>
+<style>
+:root{--bg:#0d120f;--panel:#151d17;--panel2:#1c2820;--line:#2b3a2e;--green:#b8f34b;--green2:#7fb52b;--text:#f4f7f2;--muted:#a0afa1;--red:#ff7878}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;padding-bottom:88px}
+button,input{font:inherit}button{cursor:pointer}
+.top{padding:18px 16px 12px;background:linear-gradient(150deg,#18251b,#101510 70%);position:sticky;top:0;z-index:5;border-bottom:1px solid #243026}
+.brandrow{display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{display:flex;align-items:center;gap:10px}.logo{width:42px;height:42px;border-radius:13px;background:var(--green);display:grid;place-items:center;color:#101510;font-weight:1000;font-size:17px;box-shadow:0 5px 20px #b8f34b22}.brandname{font-weight:950;letter-spacing:1px;font-size:22px}.brandname span{color:var(--green)}.sub{font-size:10px;letter-spacing:2px;color:var(--muted);margin-top:1px}.demo-pill{font-size:11px;color:var(--green);border:1px solid #557b31;background:#1d2a19;padding:7px 9px;border-radius:99px;font-weight:800}
+.balance{margin-top:15px;display:flex;justify-content:space-between;align-items:center;background:#111a13;border:1px solid #29382b;border-radius:14px;padding:11px 13px}.balance small{color:var(--muted);display:block;font-size:11px}.balance strong{display:block;font-size:19px;margin-top:3px}.balance .fcfa{font-size:10px;color:var(--green);font-weight:800}
+main{max-width:720px;margin:auto;padding:16px}.screen{display:none}.screen.active{display:block}.hello{display:flex;justify-content:space-between;align-items:center;margin:2px 0 15px}.eyebrow{color:var(--green);font-size:11px;font-weight:900;letter-spacing:1.5px}.title{font-size:23px;font-weight:900;margin:5px 0}.muted{color:var(--muted);font-size:13px}.live{display:inline-flex;align-items:center;gap:6px;color:#ff9696;font-size:11px;font-weight:800}.dot{width:7px;height:7px;border-radius:50%;background:#ff6666;display:inline-block}
+.sportrow{display:flex;gap:8px;overflow:auto;padding:2px 0 15px;scrollbar-width:none}.sport{flex:0 0 auto;border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:12px;padding:10px 13px;font-size:12px;font-weight:800}.sport.active{background:var(--green);border-color:var(--green);color:#11170e}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;margin:13px 0 10px}.sectionhead h2{font-size:15px;margin:0}.sectionhead span{font-size:11px;color:var(--muted)}
+.league{background:var(--panel);border:1px solid var(--line);border-radius:15px;overflow:hidden;margin-bottom:12px}.leaguehead{display:flex;justify-content:space-between;align-items:center;padding:11px 13px;background:#1a241c;color:#c8d3c8;font-size:11px;font-weight:800}.leaguehead .flag{margin-right:7px}.match{padding:13px;border-top:1px solid #263329}.matchtop{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:10px;margin-bottom:12px}.teams{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin-bottom:13px}.team{font-size:13px;font-weight:800;line-height:1.35}.team:last-child{text-align:right}.crest{font-size:22px;margin-right:5px}.vs{color:#748175;font-size:10px;font-weight:900}.odds{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.odd{border:1px solid #344537;background:#202b22;border-radius:9px;color:var(--text);padding:9px 5px;font-weight:900;font-size:13px}.odd small{display:block;color:var(--muted);font-size:10px;font-weight:600;margin-bottom:4px}.odd.selected{border-color:var(--green);background:#30441f;box-shadow:inset 0 0 0 1px var(--green);color:var(--green)}
+.notice{border:1px solid #5c6831;background:#202719;color:#d9e7c0;border-radius:12px;padding:11px 12px;font-size:11px;line-height:1.5;margin:14px 0}.empty{padding:28px 15px;text-align:center;color:var(--muted);border:1px dashed #354338;border-radius:14px}.empty .emoji{font-size:30px;margin-bottom:8px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:15px;margin-bottom:12px}.card h3{font-size:15px;margin:0 0 10px}.selection{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #2a382d;font-size:12px}.selection:last-child{border-bottom:0}.selection b{color:var(--green)}.remove{background:transparent;border:0;color:var(--muted);font-size:16px;padding:0 5px}.fieldlabel{display:block;color:var(--muted);font-size:11px;margin:14px 0 7px}.input{width:100%;background:#0f1611;color:var(--text);border:1px solid #354539;border-radius:10px;padding:12px;outline:none}.input:focus{border-color:var(--green)}.summaryrow{display:flex;justify-content:space-between;gap:12px;margin:11px 0;font-size:13px}.summaryrow span{color:var(--muted)}.summaryrow strong{font-variant-numeric:tabular-nums}.primary{width:100%;background:var(--green);color:#11170d;border:0;border-radius:11px;padding:13px;font-weight:950;margin-top:10px}.primary:disabled{opacity:.4;cursor:not-allowed}.secondary{background:#263329;color:var(--text);border:1px solid #3a4b3d;border-radius:10px;padding:10px 12px;font-weight:800}.historyitem{padding:12px 0;border-bottom:1px solid #2a382d}.historyitem:last-child{border:0}.tag{font-size:10px;padding:4px 7px;border-radius:7px;background:#28391f;color:var(--green);font-weight:900}.profileline{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #2a382d;font-size:13px}.profileline:last-child{border:0}.bottomnav{position:fixed;bottom:0;left:0;right:0;background:#111812ed;backdrop-filter:blur(15px);border-top:1px solid #29372b;padding:9px 8px calc(9px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(4,1fr);z-index:10}.navbtn{background:transparent;border:0;color:#849285;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;font-weight:800;padding:5px}.navbtn .ico{font-size:19px}.navbtn.active{color:var(--green)}.toast{position:fixed;left:16px;right:16px;bottom:85px;background:#263a25;border:1px solid #557b31;color:#edffdd;padding:13px;border-radius:12px;z-index:20;font-size:13px;box-shadow:0 10px 40px #0008;display:none}.toast.show{display:block}.footnote{text-align:center;color:#78877a;font-size:10px;line-height:1.5;margin:18px 4px 4px}
+@media(min-width:600px){main{padding:22px}.match{padding:16px}.top{padding-left:max(16px,calc((100vw - 680px)/2));padding-right:max(16px,calc((100vw - 680px)/2))}}
+</style>
+</head>
+<body>
+<header class="top">
+ <div class="brandrow">
+  <div class="brand"><div class="logo">1B</div><div><div class="brandname">1BET<span>WIN</span></div><div class="sub">SPORTS • DEMO</div></div></div>
+  <div class="demo-pill">● MODE DÉMO</div>
+ </div>
+ <div class="balance"><div><small>Solde fictif de démonstration</small><strong id="balance">100 000 FCFA</strong></div><div class="fcfa">AUCUN ARGENT RÉEL</div></div>
+</header>
+<main>
+<section id="home" class="screen active">
+ <div class="hello"><div><div class="eyebrow">BON RETOUR 👋</div><div class="title">Les matchs du jour</div><div class="muted">Choisis une cote pour préparer ton ticket.</div></div><span class="live"><i class="dot"></i> SIMULATION</span></div>
+ <div class="sportrow" id="sports">
+  <button class="sport active" data-sport="Tous">⚽ Tous</button><button class="sport" data-sport="Football">⚽ Football</button><button class="sport" data-sport="Basketball">🏀 Basketball</button><button class="sport" data-sport="Tennis">🎾 Tennis</button>
+ </div>
+ <div class="sectionhead"><h2>Événements en vedette</h2><span>DONNÉES FICTIVES</span></div>
+ <div id="matches"></div>
+ <div class="notice">ⓘ Prototype uniquement. Les équipes, horaires, cotes, soldes et résultats sont fictifs. Aucun pari réel, dépôt ou retrait n'est possible.</div>
+</section>
+<section id="betslip" class="screen">
+ <div class="eyebrow">TON TICKET</div><div class="title">Ticket de démonstration</div><div class="muted">Les sélections sont simulées et ne sont pas transmises à un opérateur.</div>
+ <div class="card" style="margin-top:16px"><div class="sectionhead"><h2>Mes sélections</h2><button class="remove" id="clearSelections">Tout effacer</button></div><div id="selections"></div></div>
+ <div class="card"><h3>Calcul du ticket</h3>
+ <label class="fieldlabel" for="stake">Mise fictive (FCFA)</label><input class="input" id="stake" type="number" inputmode="numeric" min="100" step="100" value="1000">
+ <div class="summaryrow"><span>Cote totale</span><strong id="totalOdds">—</strong></div>
+ <div class="summaryrow"><span>Gain potentiel fictif</span><strong id="potential">— FCFA</strong></div>
+ <button class="primary" id="placeBet" disabled>Valider le pari simulé</button>
+ <div class="muted" style="font-size:10px;margin-top:9px">La validation modifie uniquement le solde fictif local. Le gain potentiel n'est pas garanti.</div>
+ </div>
+ <div class="notice">Pas de paiement réel. Ce ticket sert uniquement à démontrer le parcours utilisateur.</div>
+</section>
+<section id="history" class="screen">
+ <div class="eyebrow">ACTIVITÉ</div><div class="title">Mes tickets</div><div class="muted">Historique des tickets simulés sur cet appareil.</div>
+ <div id="historyList" style="margin-top:15px"></div>
+ <div class="notice">Les tickets sont conservés localement dans ce navigateur. Ils ne constituent pas des paris auprès d'un bookmaker.</div>
+</section>
+<section id="profile" class="screen">
+ <div class="eyebrow">ESPACE PERSONNEL</div><div class="title">Mon compte démo</div><div class="muted">Profil fictif — aucune identité réelle requise.</div>
+ <div class="card" style="margin-top:16px"><div style="display:flex;align-items:center;gap:12px"><div class="logo" style="width:52px;height:52px;font-size:20px">JD</div><div><b>Joueur Démo</b><div class="muted" style="margin-top:4px">demo@1betwin.test</div></div><span class="tag" style="margin-left:auto">DÉMO</span></div></div>
+ <div class="card"><div class="profileline"><span>Solde de départ fictif</span><b>100 000 FCFA</b></div><div class="profileline"><span>Devise d'affichage</span><b>FCFA</b></div><div class="profileline"><span>Type de compte</span><b style="color:var(--green)">Démonstration</b></div><div class="profileline"><span>Dépôts et retraits</span><b>Indisponibles</b></div></div>
+ <button class="secondary" id="resetDemo" style="width:100%">Réinitialiser la démo</button>
+ <div class="footnote">1BETWIN est un prototype indépendant. Il n'est pas affilié à 1xBet ou à un autre opérateur. Pas de paris en argent réel.</div>
+</section>
+</main>
+<nav class="bottomnav">
+ <button class="navbtn active" data-page="home"><span class="ico">⌂</span>Accueil</button>
+ <button class="navbtn" data-page="betslip"><span class="ico">▤</span>Ticket <span id="slipCount"></span></button>
+ <button class="navbtn" data-page="history"><span class="ico">◷</span>Mes tickets</button>
+ <button class="navbtn" data-page="profile"><span class="ico">♙</span>Compte</button>
+</nav>
+<div class="toast" id="toast"></div>
+<script>
+const MATCHES=[
+ {id:'m1',sport:'Football',league:'Ligue de démonstration • Bénin',time:'Aujourd’hui · 16:00',home:'Cotonou FC',away:'Porto-Novo United',eh:'🟢',ea:'🔵',odds:[1.85,3.25,3.90]},
+ {id:'m2',sport:'Football',league:'Coupe fictive • Europe',time:'Aujourd’hui · 18:30',home:'Royal Madrid',away:'Catalonia FC',eh:'⚪',ea:'🔴🔵',odds:[2.10,3.30,2.85]},
+ {id:'m3',sport:'Basketball',league:'Ligue de démonstration • Basket',time:'Aujourd’hui · 19:00',home:'Lions de Porto',away:'Étoiles du Sud',eh:'🦁',ea:'⭐',odds:[1.72,0,2.05]},
+ {id:'m4',sport:'Tennis',league:'Tournoi fictif • Tennis',time:'Demain · 10:00',home:'A. Koffi',away:'M. Diallo',eh:'🎾',ea:'🎾',odds:[1.95,0,1.80]}
+];
+let selected = [];
+let balance = 100000;
+let history = [];
+let currentSport='Tous';
+const $=id=>document.getElementById(id);
+function fmt(n){return Math.round(n).toLocaleString('fr-FR')+' FCFA'}
+function showToast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600)}
+function renderMatches(){
+ const list=MATCHES.filter(m=>currentSport==='Tous'||m.sport===currentSport);
+ $('matches').innerHTML=list.map(m=>{
+  const labels=m.sport==='Basketball'?['1','—','2']:m.sport==='Tennis'?['Joueur 1','—','Joueur 2']:['1','N','2'];
+  const vals=m.sport==='Basketball'?[m.odds[0],null,m.odds[2]]:m.sport==='Tennis'?[m.odds[0],null,m.odds[2]]:m.odds;
+  return `<article class="league"><div class="leaguehead"><span><span class="flag">🏆</span>${m.league}</span><span>${m.sport}</span></div><div class="match"><div class="matchtop"><span>${m.time}</span><span>● FICTIF</span></div><div class="teams"><div class="team"><span class="crest">${m.eh}</span>${m.home}</div><div class="vs">VS</div><div class="team">${m.away}<span class="crest">${m.ea}</span></div></div><div class="odds">${vals.map((v,i)=>v?`<button class="odd ${selected.some(s=>s.matchId===m.id&&s.outcomeIndex===i)?'selected':''}" data-match="${m.id}" data-outcome="${i}"><small>${labels[i]}</small>${v.toFixed(2)}</button>`:`<button class="odd" disabled style="opacity:.35"><small>—</small>—</button>`).join('')}</div></div></article>`;
+ }).join('');
+ document.querySelectorAll('[data-match]').forEach(btn=>btn.addEventListener('click',()=>toggleSelection(btn.dataset.match,Number(btn.dataset.outcome))));
+}
+function toggleSelection(id,index){
+ const m=MATCHES.find(x=>x.id===id);const existing=selected.findIndex(s=>s.matchId===id);
+ if(existing>=0&&selected[existing].outcomeIndex===index){selected.splice(existing,1)}
+ else{if(existing>=0)selected.splice(existing,1);const names=m.sport==='Football'?['1','N','2']:['Choix 1','—','Choix 2'];selected.push({matchId:id,outcomeIndex:index,match:`${m.home} — ${m.away}`,outcome:names[index],odd:m.odds[index]})}
+ renderMatches();renderSlip();showToast('Sélection mise à jour');
+}
+function renderSlip(){
+ $('slipCount').textContent=selected.length?`(${selected.length})`:'';
+ $('selections').innerHTML=selected.length?selected.map((s,i)=>`<div class="selection"><div><div style="font-weight:800">${s.match}</div><div class="muted" style="margin-top:4px">${s.outcome} · Cote <b>${s.odd.toFixed(2)}</b></div></div><button class="remove" data-remove="${i}" aria-label="Supprimer">×</button></div>`).join(''):'<div class="empty"><div class="emoji">🎟️</div><b>Aucune sélection</b><div style="font-size:12px;margin-top:6px">Retourne à l’accueil et touche une cote fictive.</div></div>';
+ document.querySelectorAll('[data-remove]').forEach(b=>b.addEventListener('click',()=>{selected.splice(Number(b.dataset.remove),1);renderSlip();renderMatches()}));
+ const total=selected.reduce((a,s)=>a*s.odd,1);const stake=Math.max(0,Number($('stake').value)||0);
+ $('totalOdds').textContent=selected.length?total.toFixed(2):'—';
+ $('potential').textContent=selected.length?fmt(stake*total):'— FCFA';
+ $('placeBet').disabled=!selected.length||stake<100||stake>balance;
+}
+function renderHistory(){
+ $('historyList').innerHTML=history.length?history.slice().reverse().map(h=>`<div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><b>Ticket démo #${h.id}</b><span class="tag">SIMULÉ</span></div><div class="muted" style="margin-top:6px">${h.date}</div>${h.selections.map(s=>`<div class="selection"><span>${s.match} · ${s.outcome}</span><b>${s.odd.toFixed(2)}</b></div>`).join('')}<div class="summaryrow"><span>Mise fictive</span><strong>${fmt(h.stake)}</strong></div><div class="summaryrow"><span>Gain potentiel fictif</span><strong>${fmt(h.potential)}</strong></div></div>`).join(''):'<div class="empty"><div class="emoji">🧾</div><b>Aucun ticket pour le moment</b><div style="font-size:12px;margin-top:6px">Tes tickets simulés apparaîtront ici.</div></div>';
+}
+function navigate(page){
+ document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===page));
+ document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
+ if(page==='betslip')renderSlip();if(page==='history')renderHistory();window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.navbtn').forEach(b=>b.addEventListener('click',()=>navigate(b.dataset.page)));
+document.querySelectorAll('.sport').forEach(b=>b.addEventListener('click',()=>{currentSport=b.dataset.sport;document.querySelectorAll('.sport').forEach(x=>x.classList.toggle('active',x===b));renderMatches()}));
+$('stake').addEventListener('input',renderSlip);
+$('clearSelections').addEventListener('click',()=>{selected=[];renderSlip();renderMatches()});
+$('placeBet').addEventListener('click',()=>{
+ const stake=Math.floor(Number($('stake').value));if(!selected.length||stake<100||stake>balance)return;
+ const total=selected.reduce((a,s)=>a*s.odd,1);const potential=Math.round(stake*total);
+ balance-=stake;history.push({id:history.length+1,date:new Date().toLocaleString('fr-FR'),stake,potential,selections:selected.map(s=>({...s}))});
+ $('balance').textContent=fmt(balance);selected=[];renderSlip();renderMatches();renderHistory();showToast('Ticket de démonstration créé. Aucun pari réel effectué.');navigate('history');
+});
+$('resetDemo').addEventListener('click',()=>{if(confirm('Réinitialiser le solde fictif et effacer les tickets de cette session ?')){balance=100000;history=[];selected=[];$('balance').textContent=fmt(balance);renderMatches();renderSlip();renderHistory();showToast('Démo réinitialisée')}});
+renderMatches();renderSlip();renderHistory();
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body>
+</html>
